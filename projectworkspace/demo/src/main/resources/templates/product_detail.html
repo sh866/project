@@ -1,0 +1,166 @@
+<!doctype html>
+<html lang="ko" layout:decorate="~{layout}">
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>제품 상세 페이지</title>
+    <link rel="stylesheet" th:href="@{/bootstrap.min.css}">
+    <link rel="stylesheet" th:href="@{/style.css}">
+
+    <!-- 추가 스타일 -->
+    <style>
+        .product-detail {
+            display: flex;
+            background-color: #f4e4d2;
+            padding: 20px;
+            margin-bottom: 30px;
+        }
+
+        .product-detail img {
+            max-width: 200px;
+            margin-right: 20px;
+        }
+
+        .product-info h1 {
+            font-family: 'Jua', sans-serif;
+            font-size: 30px;
+            margin-bottom: 10px;
+        }
+
+        .product-info p {
+            margin-bottom: 15px;
+            font-size: 16px;
+            line-height: 1.5;
+        }
+
+        .rating {
+            font-size: 24px;
+            color: #666;
+            margin-top: 10px;
+        }
+
+        .review-section {
+            background-color: #f4e4d2;
+            padding: 20px;
+        }
+
+        .review-section h5 {
+            font-family: 'Jua', sans-serif;
+            font-size: 24px;
+            margin-bottom: 20px;
+        }
+
+        .review-list {
+            list-style: none;
+            padding: 0;
+        }
+
+        .review-list li {
+            margin-bottom: 15px;
+            font-size: 16px;
+        }
+
+        .review-stars {
+            color: #ffcc00;
+            font-size: 18px;
+        }
+
+        /* 별점 선택 */
+        .review-write .star-rating {
+            direction: rtl;
+            display: inline-flex;
+            font-size: 24px;
+        }
+
+        .review-write .star-rating input[type="radio"] {
+            display: none;
+        }
+
+        .review-write .star-rating label {
+            color: #ddd;
+            cursor: pointer;
+            font-size: 24px;
+        }
+
+        .review-write .star-rating input[type="radio"]:checked ~ label,
+        .review-write .star-rating label:hover,
+        .review-write .star-rating label:hover ~ label {
+            color: #ffcc00;
+        }
+
+        .review-write textarea {
+            width: 100%;
+            padding: 10px;
+            margin-bottom: 10px;
+        }
+
+        .review-write input[type="submit"] {
+            background-color: #ffcc00;
+            color: white;
+            padding: 10px 20px;
+            border: none;
+            cursor: pointer;
+            font-size: 16px;
+        }
+    </style>
+</head>
+<body>
+    <div layout:fragment="content" class="container my-3">
+        <!-- 제품 상세 정보 -->
+        <div class="product-detail">
+            <img th:src="@{/images/bread.png}" alt="제품 이미지">
+            <div class="product-info">
+                <h1 th:text="${product.name}">제품 이름</h1>
+                <p th:text="${product.description}">제품 설명</p>
+                <p th:text="'가격: ' + ${product.price} + '원'">가격</p>
+                <div class="rating" th:text="'평균 별점: ' + ${product.avgRating} + ' ★'">
+                    평균 별점: 0 ★
+                </div>
+            </div>
+        </div>
+
+        <!-- 리뷰 섹션 -->
+        <div class="review-section">
+            <h5 th:if="${product.reviewList != null and #lists.size(product.reviewList) > 0}" 
+                th:text="|리뷰가 총 ${#lists.size(product.reviewList)}개 있습니다.|">리뷰가 총 0개 있습니다.</h5>
+
+            <ul class="review-list" th:if="${product.reviewList != null and #lists.size(product.reviewList) > 0}">
+                <li th:each="review : ${product.reviewList}">
+                    <div>
+                        <span class="review-stars">
+                            <!-- 별점만큼 ★ 표시 -->
+                            <span th:each="i : ${#numbers.sequence(1, review.rating)}">★</span>
+                            <!-- 남은 별점은 빈 별로 표시 -->
+                            <span th:each="i : ${#numbers.sequence(review.rating + 1, 5)}">☆</span>
+                        </span>
+                        <span th:text="${review.content}">리뷰 내용</span>
+                    </div>
+                </li>
+            </ul>
+
+            <!-- 리뷰 작성 폼 -->
+            <div class="review-write" th:if="${product != null}">
+                <form th:action="@{|/review/create/${product.id}|}" method="post">
+                    <textarea name="content" id="content" rows="3" placeholder="리뷰를 작성하세요"></textarea>
+                    
+                    <!-- 별점 선택 -->
+                    <div class="star-rating">
+                        <input type="radio" id="star5" name="rating" value="5">
+                        <label for="star5">★</label>
+                        <input type="radio" id="star4" name="rating" value="4">
+                        <label for="star4">★</label>
+                        <input type="radio" id="star3" name="rating" value="3">
+                        <label for="star3">★</label>
+                        <input type="radio" id="star2" name="rating" value="2">
+                        <label for="star2">★</label>
+                        <input type="radio" id="star1" name="rating" value="1">
+                        <label for="star1">★</label>
+                    </div>
+
+                    <input type="submit" value="작성하기">
+                </form>
+            </div>
+        </div>
+    </div>
+</body>
+</html>

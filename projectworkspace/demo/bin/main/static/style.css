@@ -1,0 +1,79 @@
+/* 기본 스타일 초기화 */
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+/* html, body 전체 높이 설정 */
+html, body {
+    height: 100%;
+    display: flex;
+    flex-direction: column;
+    margin: 0;
+}
+
+/* 바디 스타일 */
+body {
+    font-family: 'Arial', sans-serif;
+    line-height: 1.6;
+    background-color: #f4f4f4;
+    color: #333;
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+}
+
+/* 컨텐츠 영역 */
+.container {
+    flex-grow: 1; /* 콘텐츠 영역이 남은 공간을 차지하게 설정 */
+    max-width: 1200px;
+    margin: 0 auto;
+    padding-bottom: 40px; /* Footer와의 간격 확보 */
+}
+
+/* 헤더 스타일 */
+header {
+    background-color: black;
+    color: white;
+    padding: 10px 0;
+}
+
+.navbar {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: 0 20px;
+}
+
+.nav-left a, .nav-right a {
+    margin: 0 10px;
+    text-decoration: none;
+    color: white;
+}
+
+.nav-center .logo {
+    font-size: 24px;
+    font-weight: bold;
+    color: white;
+    text-decoration: none;
+}
+
+/* 푸터 스타일 */
+footer {
+    background-color: black;
+    color: white;
+    text-align: center;
+    padding: 20px 0;
+    width: 100%;
+    position: relative; /* 푸터를 absolute 대신 relative로 설정 */
+    bottom: 0;
+}
+
+.footer-content {
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: 0 20px;
+}
