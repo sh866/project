@@ -1,6 +1,7 @@
 package com.project.web.product;
 
 import java.math.BigDecimal;
+import java.math.RoundingMode;
 import java.time.LocalDateTime;
 import java.util.List;
 
@@ -16,6 +17,7 @@ import jakarta.persistence.OneToMany;
 import java.util.OptionalDouble;
 import lombok.Getter;
 import lombok.Setter;
+
 
 @Getter
 @Setter
@@ -48,15 +50,20 @@ public class Product {
     
     
     // 평균 별점 계산 메서드
-    public double getAvgRating() {
+    public String getAvgRating() {
         if (reviewList == null || reviewList.isEmpty()) {
-            return 0.0; // 리뷰가 없으면 0점 반환
+            return "0.0"; // 리뷰가 없으면 0점 반환
         }
         
         OptionalDouble average = reviewList.stream()
-            .mapToInt(Review::getRating) // 각 리뷰의 별점을 가져옴
+            .mapToInt(Review::getRating)
             .average();
         
-        return average.orElse(0.0); // 평균을 계산하여 반환, 없으면 0.0 반환
+        double avg = average.orElse(0.0); // 평균을 계산하여 반환
+        
+        // 소수점 아래 한 자리로 반올림
+        BigDecimal bd = new BigDecimal(avg);
+        bd = bd.setScale(1, RoundingMode.HALF_UP); // 반올림
+        return bd.toString(); // 문자열로 반환
     }
 }
