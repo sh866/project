@@ -1,0 +1,59 @@
+<!doctype html>
+<html lang="ko" layout:decorate="~{layout}">
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Q&A 게시판 - 회원가입</title>
+    <link rel="stylesheet" th:href="@{/bootstrap.min.css}">
+    <link rel="stylesheet" th:href="@{/style.css}">
+</head>
+<body>
+    <div layout:fragment="content" class="container my-5">
+        <div class="row justify-content-center">
+            <div class="col-md-6">
+                <div class="border-bottom mb-4">
+                    <h4>회원가입</h4>
+                </div>
+
+                <!-- 회원가입 폼 -->
+                <form th:action="@{/user/signup}" th:object="${userCreateForm}" method="post">
+                    
+                    <!-- Username Field -->
+                    <div class="mb-3">
+                        <label for="username" class="form-label">Username</label>
+                        <input type="text" th:field="*{username}" class="form-control" placeholder="사용자 이름을 입력하세요">
+                        <div class="text-danger" th:if="${#fields.hasErrors('username')}" th:errors="*{username}"></div>
+                    </div>
+                    
+                    <!-- Password1 Field -->
+                    <div class="mb-3">
+                        <label for="password1" class="form-label">Password</label>
+                        <input type="password" th:field="*{password1}" class="form-control" placeholder="비밀번호를 입력하세요">
+                        <div class="text-danger" th:if="${#fields.hasErrors('password1')}" th:errors="*{password1}"></div>
+                    </div>
+
+                    <!-- Password2 Field -->
+                    <div class="mb-3">
+                        <label for="password2" class="form-label">Confirm Password</label>
+                        <input type="password" th:field="*{password2}" class="form-control" placeholder="비밀번호를 다시 입력하세요">
+                        <div class="text-danger" th:if="${#fields.hasErrors('password2')}" th:errors="*{password2}"></div>
+                    </div>
+                    
+                    <!-- Email Field -->
+                    <div class="mb-3">
+                        <label for="email" class="form-label">Email</label>
+                        <input type="email" th:field="*{email}" class="form-control" placeholder="이메일을 입력하세요">
+                        <div class="text-danger" th:if="${#fields.hasErrors('email')}" th:errors="*{email}"></div>
+                    </div>
+                    
+                    <!-- Submit Button -->
+                    <div class="d-grid">
+                        <button type="submit" class="btn btn-secondary">Sign Up</button>
+                    </div>
+
+                </form>
+            </div>
+        </div>
+    </div>
+</body>
+</html>
