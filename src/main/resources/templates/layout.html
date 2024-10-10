@@ -1,0 +1,40 @@
+<!doctype html>
+<html lang="ko">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>성준이 빵</title>
+    <link rel="stylesheet" th:href="@{/bootstrap.min.css}">
+    <link rel="stylesheet" th:href="@{/style.css}">
+</head>
+<body>
+    <!-- Header -->
+    <header>
+        <nav class="navbar">
+            <div class="nav-left">
+                <a th:href="@{/product/list}">제품</a>
+                <a th:href="@{/qna}">Q&A</a>
+            </div>
+			<div class="nav-center">
+			    <a th:href="@{/product/list}" class="logo">成俊堂</a>
+			</div>
+            <div class="nav-right">
+                <a th:href="@{/login}">로그인</a>
+                <a th:href="@{/signup}">회원가입</a>
+            </div>
+        </nav>
+    </header>
+
+    <!-- Main content -->
+    <main>
+        <th:block layout:fragment="content"></th:block>
+    </main>
+
+    <!-- Footer -->
+    <footer>
+        <div class="footer-content">
+            <p>© 2024 성준당. All Rights Reserved.</p>
+        </div>
+    </footer>
+</body>
+</html>
